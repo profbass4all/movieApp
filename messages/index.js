@@ -35,4 +35,6 @@ module.exports = {
     RESERVATION_FETCHED: 'Reservation has been fetched',
     RESERVATION_CANCELLED: 'Reservation has been cancelled',
     SEATS_FETCHED: 'Seats have been fetched',
+    SHOWTIME_PRICE: 10000,
+    REVENUE_FETCHED: 'Revenue has been fetched',
 }

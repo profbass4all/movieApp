@@ -15,6 +15,7 @@ const createMovie =async (req, res)=>{
         const {error} = validateMovie(req.body)
         if(error != undefined) throw new Error(error.details[0].message)
         
+        await redis_client.del(`movie_list${page}${limit}${search}${offset}`)
         await movie.create(req.body)
 
         res.status(201).json({

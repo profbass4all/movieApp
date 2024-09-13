@@ -1,6 +1,7 @@
 const messages = require('../messages')
 const {sequelize} = require('../models')
 const reservation = require('../models/reservation')(sequelize, require('sequelize').DataTypes);
+const Revenue = require('../models/revenue')(sequelize, require('sequelize').DataTypes);
 const showtime = require('../models/showtime')(sequelize, require('sequelize').DataTypes);
 const Redis = require('redis');
 const { updateShowTime } = require('./showtime.controller');
@@ -52,6 +53,25 @@ const createReservation =async (req, res)=>{
         }
         , {transaction: t}
     )
+    await redis_client.del('reservations')
+    //find the revenue table if there is a record for the revenue generated from the showtime or create one if it doesnt exist
+    //this query will return the revenue instance and a boolean indicating if the instance was just created or not
+    const [revenueInstance, isCreated] = await Revenue.findOrCreate({
+        where: {
+            showtime_id: showtime_id
+        },
+        defaults: {
+            price: messages.SHOWTIME_PRICE,
+        },
+        transaction: t
+    })
+
+    // console.log(isCreated)
+    //this query increase the the number of tickets sold
+    await revenueInstance.increment('number_of_tickets', { by: 1 , transaction: t})
+
+    // update total_revenue in revenue table
+    await revenueInstance.increment('total_revenue', { by: messages.SHOWTIME_PRICE, transaction: t})
 
     await t.commit()
     res.status(201).json({
@@ -186,7 +206,7 @@ const cancelReservation = async (req, res) => {
         if(!reservation_id || !showtime_id) throw new Error (messages.ERROR_OCCURED)
 
         const findShowtime = await showtime.findOne({
-            where: {showtime_id:showtime_id }
+            where: {showtime_id:showtime_id, is_valid: true},
         })
         if(findShowtime == null) throw new Error (messages.ERROR_OCCURED)
         
@@ -198,6 +218,18 @@ const cancelReservation = async (req, res) => {
         );
 
         const increment_seat_available = await findShowtime.increment('seats_available', {by: 1, transaction: t})
+
+        // update total_revenue in revenue table
+        const findRevenue = await Revenue.findOne({where: {showtime_id: showtime_id}})
+
+        if(findRevenue == null) throw new Error (messages.ERROR_OCCURED)
+        
+        await findRevenue.increment('total_revenue', {by: -messages.SHOWTIME_PRICE, transaction: t})
+
+        // update number_of_tickets in revenue table
+        await findRevenue.decrement('number_of_tickets', {by: 1, transaction: t})
+        //commit the transaction after all operations are done
+
         await t.commit();
 
         res.status(204).json({
@@ -256,11 +288,28 @@ const getAvailableSeats = async (req, res) => {
         }
     }
 
+const getRevenues =async (req, res) =>{
+    try {
+        //get all revenues from the database
+        const allRevenues = await Revenue.findAll()
+        res.status(200).json({
+            message: messages.REVENUE_FETCHED,
+            status: 'success',
+            data: allRevenues
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+            status: 'failure'
+        })
+    }
+}
 module.exports = {
     createReservation,
     getReservations,
     getReservation,
     getSingleReservation,
     cancelReservation,
-    getAvailableSeats
+    getAvailableSeats,
+    getRevenues
 }
