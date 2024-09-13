@@ -81,7 +81,6 @@ const getMoviesAndShowtimes = async (req, res) => {
             year = date.getFullYear()
             month = date.getMonth() + 1
             day = date.getDate()
-
         }
         
         const cached_movie_list = await redis_client.get(`moviesAndShowtimes${year}${month}${day}`)
