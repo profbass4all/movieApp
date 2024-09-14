@@ -40,4 +40,11 @@ This is a very basic movie reservation application.
 
 This project provides the following api endpoints to carryout all the functionalities listed above
 
-- **Sign Up**: 
+- **User's Routes**
+
+![carbon](https://github.com/user-attachments/assets/8b0388ec-e391-4aa7-99da-07e9445f1ff4)
+
+- **Movie's Routes**
+
+![carbon (1)](https://github.com/user-attachments/assets/32724bf9-560e-430a-a92a-7a56d63d4f50)
+
