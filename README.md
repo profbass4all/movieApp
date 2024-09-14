@@ -48,3 +48,12 @@ This project provides the following api endpoints to carryout all the functional
 
 ![carbon (1)](https://github.com/user-attachments/assets/32724bf9-560e-430a-a92a-7a56d63d4f50)
 
+- **Showtimes Routes**
+
+![showtime](https://github.com/user-attachments/assets/3d171c6d-1376-41ab-9799-75af61a7f81e)
+
+- **Reservations Routes**
+  
+![reservations](https://github.com/user-attachments/assets/3dda7ad8-2823-4208-a212-007cc0b89358)
+
+
