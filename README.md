@@ -56,4 +56,28 @@ This project provides the following api endpoints to carryout all the functional
   
 ![reservations](https://github.com/user-attachments/assets/3dda7ad8-2823-4208-a212-007cc0b89358)
 
+## Getting Started
 
+- **Clone the Repository**:
+  
+  ```
+  git clone < repository- url >
+  ```
+
+- **Install the Dependencies**:
+
+  ```
+  npm install
+  ```
+
+- **Run the Application**
+
+  ```
+  npm run dev
+  ```
+
+- **Access the Api**: Use tools like Postman or Thunderclient to interact with the endpoints
+
+## Conclusion
+
+This Movie Reservation System provides a comprehensive solution for managing movie reservations, catering to both users and admins. With its robust authentication and management features, it aims to enhance the movie-going experience.
