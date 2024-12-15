@@ -1,7 +1,5 @@
 # Movie Reservation System
 
-#### PROJECT_URL: https://roadmap.sh/projects/movie-reservation-system
-
 ## Overview
 
 This is a movie reservation system where users can create an account, login and reserve a seat for a movie. Users can check the list for all showtimes and cancel reservations where necessary. Admins can post movies and create showtimes.
