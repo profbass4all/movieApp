@@ -24,7 +24,6 @@ const createUser = async (req, res)=>{
 
         //hash password 
         const [hash, salt] =await hashPassword(password)
-
         if(!redisClient.isOpen){
             await redisClient.connect()
         }

@@ -20,7 +20,6 @@ const authentication = (req, res, next)=>{
                     
                 }else if(err instanceof jwt.TokenExpiredError){
                     return res.status(401).json({message: messages.TOKEN_EXPIRED, status: 'failure'})
-             
                 }else{
                         res.status(500).json({message: err.message})
                     }

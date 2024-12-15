@@ -4,8 +4,13 @@ const {createMovie, updateMovie, deleteMovie, getMovie, getMovies} = require('..
 const authentication = require('../middlewares/authentication');
 const authorization = require('../middlewares/authorization');
 
-
-router.post('/api/movies', authentication, authorization(['admin']), createMovie)
+router
+  .post(
+    '/api/movies', 
+    authentication, 
+    authorization(['admin']), 
+    createMovie
+)
 
 router.patch('/api/movie/:movie_id', authentication, authorization(['admin']), updateMovie)
 
